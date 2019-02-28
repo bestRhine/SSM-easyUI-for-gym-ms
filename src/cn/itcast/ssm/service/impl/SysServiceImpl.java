@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.itcast.ssm.exception.CustomException;
 import cn.itcast.ssm.mapper.SysPermissionMapperCustom;
+import cn.itcast.ssm.mapper.SysRoleMapper;
 import cn.itcast.ssm.mapper.SysUserMapper;
 import cn.itcast.ssm.po.ActiveUser;
 import cn.itcast.ssm.po.SysPermission;
+import cn.itcast.ssm.po.SysRole;
+import cn.itcast.ssm.po.SysRoleExample;
 import cn.itcast.ssm.po.SysUser;
 import cn.itcast.ssm.po.SysUserExample;
 import cn.itcast.ssm.service.SysService;
@@ -27,6 +30,9 @@ public class SysServiceImpl implements SysService {
 	
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	
+	@Autowired
+	private SysRoleMapper sysRoleMapper;
 	
 	@Autowired
 	private SysPermissionMapperCustom sysPermissionMapperCustom;
@@ -107,4 +113,10 @@ public class SysServiceImpl implements SysService {
 		return sysPermissionMapperCustom.findPermissionListByUserId(userid);
 	}
 
+	public List<SysRole> findRoleList(){
+		SysRoleExample sysRoleExample = new SysRoleExample();
+		SysRoleExample.Criteria criteria = sysRoleExample.createCriteria();
+		List<SysRole> roleList = sysRoleMapper.selectByExample(sysRoleExample);
+		return roleList;
+	}
 }

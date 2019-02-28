@@ -7,22 +7,24 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 
-<LINK rel="stylesheet" type="text/css" href="${baseurl}js/easyui/styles/default.css">
+<LINK rel="stylesheet" type="text/css"
+	href="${baseurl}js/easyui/styles/default.css">
 <%@ include file="/WEB-INF/jsp/common_css.jsp"%>
 <%@ include file="/WEB-INF/jsp/common_js.jsp"%>
 <SCRIPT type="text/javascript">
-    var tabOnSelect = function(title) {
+	var tabOnSelect = function(title) {
 		//根据标题获取tab对象
 		var currTab = $('#tabs').tabs('getTab', title);
 		var iframe = $(currTab.panel('options').content);//获取标签的内容
-		
+
 		var src = iframe.attr('src');//获取iframe的src
 		//当重新选中tab时将ifram的内容重新加载一遍，目的是获取当前页面的最新内容
 		if (src)
 			$('#tabs').tabs('update', {
 				tab : currTab,
 				options : {
-					content : createFrame(src)//ifram内容
+					content : createFrame(src)
+				//ifram内容
 				}
 			});
 
@@ -45,7 +47,6 @@
 
 		//tabClose();
 		//tabCloseEven();
-
 		$('#tabs').tabs('add', {
 			title : '欢迎使用',
 			content : createFrame('${baseurl}welcome.jsp')
@@ -53,7 +54,7 @@
 			//当重新选中tab时将ifram的内容重新加载一遍
 			onSelect : tabOnSelect
 		});
-		
+
 		//修改密码
 		$('#modifypwd').click(menuclick);
 
@@ -61,20 +62,15 @@
 
 	//退出系统方法
 	function logout() {
-		_confirm('您确定要退出本系统吗?',null,
-				function(){
-					location.href = '${baseurl}logout.action';
-				}
-		)
+		_confirm('您确定要退出本系统吗?', null, function() {
+			location.href = '${baseurl}logout.action';
+		})
 	}
-	
 
 	//帮助
-	function showhelp(){
-	    window.open('${baseurl}help/help.html','帮助文档'); 
+	function showhelp() {
+		window.open('${baseurl}help/help.html', '帮助文档');
 	}
-	
-	
 </SCRIPT>
 
 
@@ -82,69 +78,104 @@
 <META name="GENERATOR" content="MSHTML 9.00.8112.16540">
 </HEAD>
 
-<BODY style="overflow-y: hidden;" class="easyui-layout" scroll="no" >
+<BODY style="overflow-y: hidden;" class="easyui-layout" scroll="no">
 	<DIV
 		style='background: url("images/layout-browser-hd-bg.gif") repeat-x center 50% rgb(127, 153, 190); height: 30px; color: rgb(255, 255, 255); line-height: 20px; overflow: hidden; font-family: Verdana, 微软雅黑, 黑体;'
 		border="false" split="true" region="north">
 		<SPAN style="padding-right: 20px; float: right;" class="head">
-			欢迎当前用户：${activeUser.username}&nbsp;&nbsp;
-			<A href=javascript:showhelp()>使用帮助</A>
-			&nbsp;&nbsp;
-			<A title='修改密码' ref='modifypwd' href="#" rel='${baseurl}user/updatepwd.action' icon='icon-null' id="modifypwd" >修改密码</A>
-			&nbsp;&nbsp;
-			<A id="loginOut" href=javascript:logout()>退出系统</A>
+			欢迎当前用户：${activeUser.username}&nbsp;&nbsp; <A
+			href=javascript:showhelp()>使用帮助</A> &nbsp;&nbsp; <A title='修改密码'
+			ref='modifypwd' href="#" rel='${baseurl}user/updatepwd.action'
+			icon='icon-null' id="modifypwd">修改密码</A> &nbsp;&nbsp; <A
+			id="loginOut" href=javascript:logout()>退出系统</A>
 
 		</SPAN> <SPAN style="padding-left: 10px; font-size: 16px;"><IMG
 			align="absmiddle" src="images/blocks.gif" width="20" height="20">
 			医药集中采购系统</SPAN> <SPAN style="padding-left: 15px;" id="News"></SPAN>
 	</DIV>
 
-	<DIV style="background: rgb(210, 224, 242); height: 30px;" split="false"
-		region="south">
+	<DIV style="background: rgb(210, 224, 242); height: 30px;"
+		split="false" region="south">
 
 		<DIV class="footer">
-			系统版本号：${version_number}&nbsp;&nbsp;&nbsp;发布日期：${version_date}
-		</DIV>
+			系统版本号：${version_number}&nbsp;&nbsp;&nbsp;发布日期：${version_date}</DIV>
 	</DIV>
 
 	<DIV style="width: 180px;" id="west" title="导航菜单" split="true"
 		region="west" hide="true">
 
 		<DIV id="nav" class="easyui-accordion" border="false" fit="true">
-			
+
 			<c:if test="${activeUser.menus!=null }">
 				<ul>
-				<c:forEach items="${activeUser.menus }" var="menu">
-					<li><div>
-						<a title="${menu.name }" ref="1_1" href="#"
-							rel="${baseurl }${menu.url }" icon="icon-log"><span
-							class="icon icon-log">&nbsp;</span><span class="nav"><a href=javascript:addTab('${menu.name }','${baseurl }/${menu.url }')>${menu.name }</a></span></a>
-					</div></li>
-				</c:forEach>
+					<c:forEach items="${activeUser.menus }" var="menu">
+						<li><div>
+								<a title="${menu.name }" ref="1_1" href="#"
+									rel="${baseurl }${menu.url }" icon="icon-log"> <span
+									class="icon icon-log">&nbsp;</span> <span class="nav"> <a
+										href=javascript:addTab('${menu.name }','${baseurl }/${menu.url }')>${menu.name }</a>
+								</span>
+								</a>
+							</div></li>
+					</c:forEach>
 				</ul>
 			</c:if>
-			 <ul>
-			<li><div>
-					<a title="创建采购单" ref="1_1" href="#"
-						rel="${baseurl} items/queryItems.action" icon="icon-log"><span
-						class="icon icon-log">&nbsp;</span><span class="nav"><a href=javascript:addTab('创建采购单','${baseurl}items/queryItems.action')>商品查询</a></span></a>
-				</div></li>
-			<li><div>
-					<a title="提交采购单" ref="1_1" href="#"
-						rel="/purchasing/order/orderList.action?type=1" icon="icon-log"><span
-						class="icon icon-log">&nbsp;</span><span class="nav">提交采购单</span></a>
-				</div></li>
-			<li><div>
-					<a title="部门经理审核" ref="1_1" href="#"
-						rel="/purchasing/order/orderList.action?type=2" icon="icon-log"><span
-						class="icon icon-log">&nbsp;</span><span class="nav">部门经理审核</span></a>
-				</div></li>
-			<li><div>
-					<a title="总经理审核" ref="1_1" href="#"
-						rel="/purchasing/order/orderList.action?type=3" icon="icon-log"><span
-						class="icon icon-log">&nbsp;</span><span class="nav">总经理审核</span></a>
-				</div></li>
-		</ul> 
+			<ul>
+				<li><div>
+						<a title="创建采购单" ref="1_1" href="#"
+							rel="${baseurl} items/queryItems.action" icon="icon-log"><span
+							class="icon icon-log">&nbsp;</span><span class="nav"><a
+								href=javascript:addTab('创建采购单','${baseurl}items/queryItems.action')>商品查询</a></span></a>
+					</div></li>
+				<li><div>
+						<a title="提交采购单" ref="1_1" href="#"
+							rel="/purchasing/order/orderList.action?type=1" icon="icon-log"><span
+							class="icon icon-log">&nbsp;</span><span class="nav"><a
+								href=javascript:addTab('提交采购单','${baseurl}items/queryItems.action')>商品查询</a></span></a>
+					</div></li>
+				<li><div>
+						<a title="部门经理审核" ref="1_1" href="#"
+							rel="/purchasing/order/orderList.action?type=2" icon="icon-log"><span
+							class="icon icon-log">&nbsp;</span><span class="nav">部门经理审核</span></a>
+					</div></li>
+				<li><div>
+						<a title="总经理审核" ref="1_1" href="#"
+							rel="/purchasing/order/orderList.action?type=3" icon="icon-log"><span
+							class="icon icon-log">&nbsp;</span><span class="nav">总经理审核</span></a>
+					</div></li>
+			</ul>
+			<ul id="tt" class="easyui-tree">
+				<li><span>教学管理</span>
+					<ul>
+
+						<li><span class="nav"><a href=javascript:addTab('私教合同','${baseurl}teachManager/queryPriContract.action')>私课合同</a></span></li>
+
+						<li><span><a href=javascript:addTab('课程管理','${baseurl}coachManager/queryCourse.action')>课程管理</a></span>
+						</li>
+						<li><span><a href=javascript:addTab('团课管理','')>团课管理</a></span>
+						</li>
+
+						<li><span><a href=javascript:addTab('教练管理','${baseurl}coachManager/queryCoach.action')>教练查询</a></span></li>
+						
+
+					</ul></li>
+				<li><span>会籍管理</span>
+					<ul>
+						<li><span><a href=javascript:addTab('会员管理','${baseurl}memberManager/queryMem.action')>会员管理</a></span>
+						</li>
+						<li><span><a href=javascript:addTab('会员卡管理','${baseurl}memberManager/queryMemCard.action')>会员卡管理</a></span>
+						</li>
+						<li><span><a href=javascript:addTab('会籍合同','${baseurl}memberManager/queryMemContract.action')>会籍合同</a></span>
+						</li>
+					</ul></li>
+				<li><span>员工管理</span>
+					<ul>
+						<li><span><a href=javascript:addTab('员工管理','${baseurl}empManager/queryEmp.action')>员工管理</a></span>
+						</li>
+						<li><span><a href=javascript:addTab('角色管理','${baseurl}empManager/queryRoles.action')>角色管理</a></span>
+						</li>
+					</ul></li>
+			</ul>
 		</DIV>
 	</DIV>
 

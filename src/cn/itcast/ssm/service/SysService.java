@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.itcast.ssm.po.ActiveUser;
 import cn.itcast.ssm.po.SysPermission;
+import cn.itcast.ssm.po.SysRole;
 import cn.itcast.ssm.po.SysUser;
 
 /**
@@ -28,4 +29,7 @@ public interface SysService {
 	
 	//根据用户id查询权限范围的url
 	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception;
+	
+	//获取当前全部角色
+	public List<SysRole> findRoleList() throws Exception;
 }

@@ -13,8 +13,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 
 	由于使用spring和mybatis整合的mapper扫描器，这里可以不用配置了
 	<mappers>
+		批量配置（要求mapper.xml与mapper.java在同一个包下面且同名）
 		<package name="cn.itcast.ssm.mapper" />
-
+		单个配置（要求mapper.xml与mapper.java在同一个包下面且同名）
+		<package class="cn.itcast.ssm.mapper.UserMapper" />
 
 	</mappers> -->
 

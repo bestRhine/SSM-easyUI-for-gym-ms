@@ -38,7 +38,9 @@
 					/images/** = anon
 					/js/** = anon
 					/styles/** = anon
-					/validatecode.jsp = anon				
+					/validatecode.jsp = anon
+					/index.jsp = anon
+					/register.jsp = anon				
 					<!-- 请求logout。action地址，shiro去清除session -->
 					/logout.action = logout
 					
@@ -46,7 +48,7 @@
 					<!-- /items/queryItems.action = perms[item:query] -->
 					<!-- /items/editItems.action = perms[item:edit] -->
 					<!-- 通过记住我认证通过即可访问的路径 -->
-					/index.jsp = user
+					<!-- /index.jsp = user -->
 					/first.action = user
 					/welcome.jsp = user
 					
