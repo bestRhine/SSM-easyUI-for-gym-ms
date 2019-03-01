@@ -30,6 +30,20 @@ public interface SysService {
 	//根据用户id查询权限范围的url
 	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception;
 	
+	//根据角色id查询权限范围的菜单
+	public List<SysPermission> findMenuListByRoleId(String roleid) throws Exception;
+	
+	//根据角色id查询权限范围的url
+	public List<SysPermission> findPermissionListByRoleId(String roleid) throws Exception;
+	
+	
 	//获取当前全部角色
 	public List<SysRole> findRoleList() throws Exception;
+	//获取全部资源permission
+	public List<SysPermission> findPermissionList() throws Exception;
+	
+	
+	//插入角色
+	public void addRole(SysRole role)throws Exception;
+	
 }

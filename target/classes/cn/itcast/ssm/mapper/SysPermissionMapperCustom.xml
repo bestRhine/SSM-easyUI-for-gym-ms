@@ -42,5 +42,25 @@
 	      sys_user_role 
 	    WHERE sys_user_id = #{id}))
   </select>
+  <!-- 根据角色id查询菜单Menu -->
+  <select id="findMenuListByRoleId" parameterType="string" resultType="cn.itcast.ssm.po.SysPermission">
+  	SELECT
+		sp.*
+	FROM
+		sys_role_permission srp
+	JOIN sys_permission sp ON srp.sys_permission_id = sp.id
+	AND srp.sys_role_id = #{id}
+	AND sp.type = "menu"
+  </select>
+    <!-- 根据角色id查询Permission -->
+  <select id="findPermissionListByRoleId" parameterType="string" resultType="cn.itcast.ssm.po.SysPermission">
+  	SELECT
+		sp.*
+	FROM
+		sys_role_permission srp
+	JOIN sys_permission sp ON srp.sys_permission_id = sp.id
+	AND srp.sys_role_id = #{id}
+	AND sp.type = "permission"
+  </select>
   
 </mapper>

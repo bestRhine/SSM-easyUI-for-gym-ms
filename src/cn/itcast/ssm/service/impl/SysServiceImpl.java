@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.itcast.ssm.exception.CustomException;
+import cn.itcast.ssm.mapper.SysPermissionMapper;
 import cn.itcast.ssm.mapper.SysPermissionMapperCustom;
 import cn.itcast.ssm.mapper.SysRoleMapper;
 import cn.itcast.ssm.mapper.SysUserMapper;
 import cn.itcast.ssm.po.ActiveUser;
 import cn.itcast.ssm.po.SysPermission;
+import cn.itcast.ssm.po.SysPermissionExample;
+import cn.itcast.ssm.po.SysPermissionExample.Criteria;
 import cn.itcast.ssm.po.SysRole;
 import cn.itcast.ssm.po.SysRoleExample;
 import cn.itcast.ssm.po.SysUser;
@@ -33,6 +36,9 @@ public class SysServiceImpl implements SysService {
 	
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
+	
+	@Autowired
+	private SysPermissionMapper sysPermissionMapper;
 	
 	@Autowired
 	private SysPermissionMapperCustom sysPermissionMapperCustom;
@@ -112,11 +118,39 @@ public class SysServiceImpl implements SysService {
 		
 		return sysPermissionMapperCustom.findPermissionListByUserId(userid);
 	}
-
+	@Override
 	public List<SysRole> findRoleList(){
 		SysRoleExample sysRoleExample = new SysRoleExample();
 		SysRoleExample.Criteria criteria = sysRoleExample.createCriteria();
 		List<SysRole> roleList = sysRoleMapper.selectByExample(sysRoleExample);
 		return roleList;
 	}
+	//根据角色id查询所有menu
+	@Override
+	public List<SysPermission> findMenuListByRoleId(String roleid) throws Exception {
+		
+		return sysPermissionMapperCustom.findMenuListByRoleId(roleid);
+	}
+	//根据角色id查询所有permission
+	@Override
+	public List<SysPermission> findPermissionListByRoleId(String roleid) throws Exception {
+		
+		return sysPermissionMapperCustom.findPermissionListByRoleId(roleid);
+	}
+	//查询所有permissioin
+	@Override
+	public List<SysPermission> findPermissionList() throws Exception {
+		SysPermissionExample sysPermissionExample = new SysPermissionExample();
+		SysPermissionExample.Criteria criteria = sysPermissionExample.createCriteria();
+		criteria.andIdNotEqualTo(1L);
+		return sysPermissionMapper.selectByExample(sysPermissionExample);
+	}
+	
+	//新增角色
+	@Override
+	public void addRole(SysRole role) throws Exception {
+		sysRoleMapper.insert(role);
+	}
+	
+	
 }

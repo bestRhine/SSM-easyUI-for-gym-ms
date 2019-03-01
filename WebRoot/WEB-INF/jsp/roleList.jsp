@@ -7,75 +7,150 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
 <title>角色管理</title>
-<script type="text/javascript">
-function deleteRoles(){
-	
-	//将form的action指向删除商品的地址
-	document.itemsForm.action="${pageContext.request.contextPath }/empManager/deleteRoles.action";
-	
-	//进行form提交
-	document.rolesForm.submit();
-	
-}
-</script>
 </head>
 <body> 
-当前用户：${usercode }  ${username }
-<c:if test="${usercode!=null }">
-	<a href="${pageContext.request.contextPath }/logout.action">退出</a>
-</c:if>
 
-<form name="rolesForm" action="${pageContext.request.contextPath }/items/queryItem.action" method="post">
-查询条件：
-<table width="100%" border=1>
-<tr>
-<td>
-商品类别：
-<select>
-	<c:forEach items="${itemsType }" var="item">
-			<option value="${item.key }">${item.value }</option>
-	
-	</c:forEach>
-	
-</select>
-</td>
-<td><input type="submit" value="查询"/>
-<input type="button" value="批量删除" onclick="deleteRoles()"/>
-</td>
-</tr>
+
+<table id="dg" title="角色" class="easyui-datagrid" style="width:550px;height:250px"
+		url="${pageContext.request.contextPath }/roleManager/queryRoles.action"
+		toolbar="#toolbar" pagination="true"
+		rownumbers="true" fitColumns="true" singleSelect="true">
+	<thead>
+		<tr>
+			<th field="id" width="50">角色id</th>
+			<th field="name" width="50">角色名</th>
+			<th field="available" width="50">是否可用</th>
+		</tr>
+	</thead>
 </table>
-<shiro:hasPermission name="item:update">有商品修改权限</shiro:hasPermission>
-商品列表：
-<table width="100%" border=1>
-<tr>	
-	<td>选择</td>
-	<td>角色id</td>
-	<td>角色名</td>
-	<td>是否可用</td>
-	<td>操作</td>
-	<td>rest连接</td>
-</tr>
-<c:forEach items="${roleList }" var="item">
-<tr>
-	<td><input type="checkbox" name="delete_id" value="${item.id}" /></td>
-	<td>${item.id }</td>
-	<td>${item.name }</td>
-	<td>${item.available }</td>
-	
-	<td>
-		<!-- 这就表示：如果有item:upadte权限则显示修改链接，若果没有，则不显示 -->
-		<shiro:hasPermission name="emp:update">
-			<a href="${pageContext.request.contextPath }/empManager/editRole.action?id=${item.id}">修改</a>
-		</shiro:hasPermission>
-	</td>
-	<td><a href="${pageContext.request.contextPath }/empManager/viewRole/${item.id}">商品查看</a></td>
+<div id="toolbar">
+	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newRole()">添加角色</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editRole()">修改角色</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyRole()">删除角色</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton"  plain="true" onclick="queryRolePermission()">查看角色权限</a>
+</div>
+	<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+			closed="true" buttons="#dlg-buttons">
+		<div class="ftitle">角色信息</div>
+		<form id="fm" method="post" novalidate>
+			<div class="fitem">
+				<label>角色id:</label>
+				<input name="id" class="easyui-textbox" required="true">
+			</div>
+			<div class="fitem">
+				<label>设置权限</label>
+				<ul id="tt" class="easyui-tree"
+					url="${pageContext.request.contextPath }/roleManager/getPermissions.action"
+					checkbox="true" text="${$node.name}">
+					
+				</ul>
+			</div>
+			<div class="fitem">
+				<label>角色名:</label>
+				<input name="name" class="easyui-textbox" required="true">
+			</div>
+			<div class="fitem">
+				<label>是否可用</label>
+				<input name="available" class="easyui-textbox">
+			</div>
+		</form>
+	</div>
+	<div id="dlg-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveRole()" style="width:90px">Save</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+	</div>
+	<script type="text/javascript">
+		var url;
+		function newRole(){
+			$('#dlg').dialog('open').dialog('setTitle','新增角色');
+			$('#fm').form('clear');
+			url = '${pageContext.request.contextPath }/roleManager/addRole.action';
+		}
+		function editRole(){
+			var row = $('#dg').datagrid('getSelected');
+			if (row){
+				$('#dlg').dialog('open').dialog('setTitle','修改角色');
+				$('#fm').form('load',row);
+				url = 'update_user.php?id='+row.id;
+			}
+		}
+		function queryRolePermission(){
 
-</tr>
-</c:forEach>
+		}
+		function saveRole(){
+			$('#fm').form('submit',{
+				url: url,
+				onSubmit: function(){
+					return $(this).form('validate');
+				},
+				success: function(result){
+					alert(result);
+					var result = eval('('+result+')');
+					
+					if (JSON.stringify(result)!="success"){
+						$.messager.show({
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					} else {
+						$('#dlg').dialog('close');		// close the dialog
+						$('#dg').datagrid('reload');	// reload the user data
+					}
+				}
+			});
+		}
+		function destroyRole(){
+			var row = $('#dg').datagrid('getSelected');
+			if (row){
+				$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+					if (r){
+						$.post('destroy_user.php',{id:row.id},function(result){
+							if (result.success){
+								$('#dg').datagrid('reload');	// reload the user data
+							} else {
+								$.messager.show({	// show error message
+									title: 'Error',
+									msg: result.errorMsg
+								});
+							}
+						},'json');
+					}
+				});
+			}
+		}
+	</script>
+	<style type="text/css">
+		#fm{
+			margin:0;
+			padding:10px 30px;
+		}
+		.ftitle{
+			font-size:14px;
+			font-weight:bold;
+			padding:5px 0;
+			margin-bottom:10px;
+			border-bottom:1px solid #ccc;
+		}
+		.fitem{
+			margin-bottom:5px;
+		}
+		.fitem label{
+			display:inline-block;
+			width:80px;
+		}
+		.fitem input{
+			width:160px;
+		}
+	</style>
 
-</table>
-</form>
+
 </body>
 
 </html>

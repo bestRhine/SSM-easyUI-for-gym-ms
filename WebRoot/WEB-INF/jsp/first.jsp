@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/jsp/tag.jsp"%>
 <html>
 <head>
-<title>药品采购平台</title>
+<title>健身管理系统</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 
@@ -91,7 +91,7 @@
 
 		</SPAN> <SPAN style="padding-left: 10px; font-size: 16px;"><IMG
 			align="absmiddle" src="images/blocks.gif" width="20" height="20">
-			医药集中采购系统</SPAN> <SPAN style="padding-left: 15px;" id="News"></SPAN>
+			健身管理系统</SPAN> <SPAN style="padding-left: 15px;" id="News"></SPAN>
 	</DIV>
 
 	<DIV style="background: rgb(210, 224, 242); height: 30px;"
@@ -106,7 +106,7 @@
 
 		<DIV id="nav" class="easyui-accordion" border="false" fit="true">
 
-			<c:if test="${activeUser.menus!=null }">
+<%-- 			<c:if test="${activeUser.menus!=null }">
 				<ul>
 					<c:forEach items="${activeUser.menus }" var="menu">
 						<li><div>
@@ -119,31 +119,8 @@
 							</div></li>
 					</c:forEach>
 				</ul>
-			</c:if>
-			<ul>
-				<li><div>
-						<a title="创建采购单" ref="1_1" href="#"
-							rel="${baseurl} items/queryItems.action" icon="icon-log"><span
-							class="icon icon-log">&nbsp;</span><span class="nav"><a
-								href=javascript:addTab('创建采购单','${baseurl}items/queryItems.action')>商品查询</a></span></a>
-					</div></li>
-				<li><div>
-						<a title="提交采购单" ref="1_1" href="#"
-							rel="/purchasing/order/orderList.action?type=1" icon="icon-log"><span
-							class="icon icon-log">&nbsp;</span><span class="nav"><a
-								href=javascript:addTab('提交采购单','${baseurl}items/queryItems.action')>商品查询</a></span></a>
-					</div></li>
-				<li><div>
-						<a title="部门经理审核" ref="1_1" href="#"
-							rel="/purchasing/order/orderList.action?type=2" icon="icon-log"><span
-							class="icon icon-log">&nbsp;</span><span class="nav">部门经理审核</span></a>
-					</div></li>
-				<li><div>
-						<a title="总经理审核" ref="1_1" href="#"
-							rel="/purchasing/order/orderList.action?type=3" icon="icon-log"><span
-							class="icon icon-log">&nbsp;</span><span class="nav">总经理审核</span></a>
-					</div></li>
-			</ul>
+			</c:if> --%>
+			
 			<ul id="tt" class="easyui-tree">
 				<li><span>教学管理</span>
 					<ul>
@@ -172,7 +149,7 @@
 					<ul>
 						<li><span><a href=javascript:addTab('员工管理','${baseurl}empManager/queryEmp.action')>员工管理</a></span>
 						</li>
-						<li><span><a href=javascript:addTab('角色管理','${baseurl}empManager/queryRoles.action')>角色管理</a></span>
+						<li><span><a href=javascript:addTab('角色管理','${baseurl}roleManager/getRoles.action')>角色管理</a></span>
 						</li>
 					</ul></li>
 			</ul>

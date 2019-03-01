@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/jsp/tag.jsp"%>
 <html>
 <head>
-<TITLE>药品采购平台</TITLE>
+<TITLE>健身管理系统</TITLE>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -47,7 +47,7 @@
 		<DIV class="logincon">
 
 			<DIV class="title">
-				<IMG alt="" src="${baseurl}images/login/logo.png">
+				<IMG alt="" src="${baseurl}images/login/logo3.png">
 			</DIV>
 
 			<DIV class="cen_con">
