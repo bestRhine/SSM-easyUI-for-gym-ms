@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.ssm.mapper.UserInfoMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="cn.itcast.ssm.po.UserInfo" id="UserInfoRM">
+		<!-- 主键 -->
+		<id property="userNumber" column="userNumber" jdbcType="VARCHAR" />
+		<!-- 一般属性 -->
+		<result property="tenantID" column="tenantID" />
+		<result property="weixin" column="weixin" />
+		<result property="icon" column="icon" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="registerDate" column="registerDate" />
+		<result property="biosignature" column="biosignature" />
+		<result property="sex" column="sex" />
+		<result property="nationality" column="nationality" />
+		<result property="birthday" column="birthday" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="company" column="company" />
+		<result property="emergencyContact" column="emergencyContact" />
+		<result property="emergencyContactNumber"
+			column="emergencyContactNumber" />
+		<result property="ID" column="ID" />
+		<result property="aim" column="aim" />
+		<result property="timeCardEnabled" column="timeCardEnabled" />
+		<result property="timeCardEffectiveDate"
+			column="timeCardEffectiveDate" />
+		<result property="timeCardRemainingDate"
+			column="timeCardRemainingDate" />
+		<result property="timesCardRemainingTimes"
+			column="timesCardRemainingTimes" />
+		<result property="timesCardSumTimes" column="timesCardSumTimes" />
+		<result property="timeCardSumTime" column="timeCardSumTime" />
+		<result property="totaluser_infoshipPoints"
+			column="totaluser_infoshipPoints" />
+		<result property="balance" column="balance" />
+		<result property="totalConsumptionAmount"
+			column="totalConsumptionAmount" />
+		<result property="cardActivationDateTime"
+			column="cardActivationDateTime" />
+		<result property="failureDateTime" column="failureDateTime" />
+		<result property="image" column="image" />
+		<result property="idnum" column="idnum" />
+		<result property="parkingStartTime" column="parkingStartTime" />
+		<result property="parkingEndTime" column="parkingEndTime" />
+		<result property="phone" column="phone" />
+		<result property="qrencode" column="qrencode" />
+
+	</resultMap>
+
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="UserInfoRM">
+		select * from
+		user_info
+		where userNumber=#{userNumber}
+	</select>
+
+	
+
+	<!-- sql片段 -->
+	<sql id="query_user_info_where">
+		<if test="userNumber != null"> and userNumber = #{userNumber}</if>
+		<if test="tenantID != null"> and tenantID like #{tenantID}</if>
+		<if test="weixin != null"> and weixin like #{weixin}</if>
+		<if test="username != null"> and username like #{username}</if>
+		<if test="sex != null"> and sex =#{sex}</if>
+		<if test="phone != null"> and phone = #{phone}</if>
+		<if test="birthday != null"> and birthday like #{birthday}</if>
+	</sql>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap"
+		resultMap="UserInfoRM">
+		select * from user_info
+		where 1=1
+		<include refid="query_user_info_where"></include><!-- sql片段引入 -->
+
+	</select>
+
+
+
+	<!-- 通过phone查询 -->
+	<select id="getByPhone" parameterType="string"
+		resultMap="UserInfoRM">
+		select * from user_info
+		where phone=#{phone}
+	</select>
+
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select COUNT(*) from user_info
+		where 1=1
+		<include refid="query_user_info_where"></include><!-- sql片段引入 -->
+	</select>
+
+	<insert id="insert" parameterType="cn.itcast.ssm.po.UserInfo">
+		insert into user_info
+		(USERNUMBER,TENANTID,WEIXIN,ICON,USERNAME,PASSWORD,REGISTERDATE
+		,BIOSIGNATURE,SEX,NATIONALITY,BIRTHDAY,EMAIL,ADDRESS,COMPANY,EMERGENCYCONTACT
+		,EMERGENCYCONTACTNUMBER,ID,AIM,TIMECARDENABLED,TIMECARDEFFECTIVEDATE,TIMECARDREMAININGDATE
+		,TIMESCARDREMAININGTIMES,TIMESCARDSUMTIMES,TIMECARDSUMTIME,TOTALMEMBERSHIPPOINTS
+		,BALANCE,TOTALCONSUMPTIONAMOUNT,CARDACTIVATIONDATETIME,FAILUREDATETIME,IMAGE,IDNUM,PARKINGSTARTTIME
+		,PARKINGENDTIME,PHONE,QRENCODE)
+		values
+		( 
+		#{userNumber,jdbcType=VARCHAR},
+		#{tenantID,jdbcType=VARCHAR},
+		#{weixin,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{registerDate,jdbcType=VARCHAR},
+		#{biosignature,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{nationality,jdbcType=VARCHAR},
+		#{birthday,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{company,jdbcType=VARCHAR},
+		#{emergencyContact,jdbcType=VARCHAR},
+		#{emergencyContactNumber,jdbcType=VARCHAR},
+		#{ID,jdbcType=VARCHAR},
+		#{aim,jdbcType=VARCHAR},
+		#{timeCardEnabled,jdbcType=VARCHAR},
+		#{timeCardEffectiveDate,jdbcType=VARCHAR},
+		#{timeCardRemainingDate,jdbcType=VARCHAR},
+		#{timesCardRemainingTimes,jdbcType=INTEGER},
+		#{timesCardSumTimes,jdbcType=INTEGER},
+		#{timeCardSumTime,jdbcType=INTEGER},
+		#{totalMembershipPoints,jdbcType=INTEGER},
+		#{balance,jdbcType=INTEGER},
+		#{totalConsumptionAmount,jdbcType=INTEGER},
+		#{cardActivationDateTime,jdbcType=VARCHAR},
+		#{failureDateTime,jdbcType=VARCHAR},
+		#{image,jdbcType=VARCHAR},
+		#{idnum,jdbcType=VARCHAR},
+		#{parkingStartTime,jdbcType=VARCHAR},
+		#{parkingEndTime,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{qrencode,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<!-- 修改语句 -->
+	<update id="update" parameterType="cn.itcast.ssm.po.UserInfo">
+		update user_info
+		<set>
+			<if test="tenantID != null">tenantID=#{tenantID,jdbcType=VARCHAR},</if>
+			<if test="weixin != null">weixin=#{weixin,jdbcType=VARCHAR},</if>
+			<if test="icon != null">icon=#{icon,jdbcType=VARCHAR},</if>
+			<if test="username != null">username=#{username,jdbcType=VARCHAR},</if>
+			<if test="password != null">password=#{password,jdbcType=VARCHAR},</if>
+			<if test="registerDate != null">registerDate=#{registerDate,jdbcType=VARCHAR},</if>
+			<if test="biosignature != null">biosignature=#{biosignature,jdbcType=VARCHAR},</if>
+			<if test="sex != null">sex=#{sex,jdbcType=VARCHAR},</if>
+			<if test="nationality != null">nationality=#{nationality,jdbcType=VARCHAR},</if>
+			<if test="birthday != null">birthday=#{birthday,jdbcType=VARCHAR},</if>
+			<if test="email != null">email=#{email,jdbcType=VARCHAR},</if>
+			<if test="address != null">address=#{address,jdbcType=VARCHAR},</if>
+			<if test="company != null">company=#{company,jdbcType=VARCHAR},</if>
+			<if test="emergencyContact != null">emergencyContact=#{emergencyContact,jdbcType=VARCHAR},
+			</if>
+			<if test="emergencyContactNumber != null">emergencyContactNumber=#{emergencyContactNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="ID != null">ID=#{ID,jdbcType=VARCHAR},</if>
+			<if test="aim != null">aim=#{aim,jdbcType=VARCHAR},</if>
+			<if test="timeCardEnabled != null">timeCardEnabled=#{timeCardEnabled,jdbcType=VARCHAR},</if>
+			<if test="timeCardEffectiveDate != null">timeCardEffectiveDate=#{timeCardEffectiveDate,jdbcType=VARCHAR},
+			</if>
+			<if test="timeCardRemainingDate != null">timeCardRemainingDate=#{timeCardRemainingDate,jdbcType=VARCHAR},
+			</if>
+			<if test="timesCardRemainingTimes != null">timesCardRemainingTimes=#{timesCardRemainingTimes,jdbcType=INTEGER},
+			</if>
+			<if test="timesCardSumTimes != null">timesCardSumTimes=#{timesCardSumTimes,jdbcType=INTEGER},
+			</if>
+			<if test="timeCardSumTime != null">timeCardSumTime=#{timeCardSumTime,jdbcType=INTEGER},</if>
+			<if test="totalMembershipPoints != null">totalMembershipPoints=#{totalMembershipPoints,jdbcType=INTEGER},
+			</if>
+			<if test="balance != null">balance=#{balance,jdbcType=INTEGER},</if>
+			<if test="totalConsumptionAmount != null">totalConsumptionAmount=#{totalConsumptionAmount,jdbcType=INTEGER},
+			</if>
+			<if test="cardActivationDateTime != null">cardActivationDateTime=#{cardActivationDateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="failureDateTime != null">failureDateTime=#{failureDateTime,jdbcType=VARCHAR},</if>
+			<if test="image != null">image=#{image,jdbcType=VARCHAR},</if>
+			<if test="idnum != null">idnum=#{idnum,jdbcType=VARCHAR},</if>
+			<if test="parkingStartTime != null">parkingStartTime=#{parkingStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="parkingEndTime != null">parkingEndTime=#{parkingEndTime,jdbcType=VARCHAR},</if>
+			<if test="phone != null">phone=#{phone,jdbcType=VARCHAR},</if>
+			<if test="qrencode != null">qrencode=#{qrencode,jdbcType=VARCHAR}</if>
+		</set>
+		where userNumber=#{userNumber}
+	</update>
+
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from user_info
+		where userNumber=#{userNumber}
+	</delete>
+
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from user_info
+		where userNumber in
+		<foreach collection="array" item="userNumber" open="("
+			close=")" separator=",">
+			#{userNumber}
+		</foreach>
+	</delete>
+	
+	<select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user_info
+    </select>   
+    
+	 <select id="list" resultMap="UserInfoRM">
+        SELECT * FROM user_info ORDER BY userNumber  desc  limit #{param1},#{param2}
+	 </select>
+</mapper>  

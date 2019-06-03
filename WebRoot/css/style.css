@@ -1,0 +1,94 @@
+body {
+    padding-top: 20px;
+    padding-left: 60px;
+}
+
+div.right{
+	position : absolute;
+	top:140px;
+	left:400px;
+}
+
+div.findDIV {
+    width: 600px;
+    margin: 0 auto;
+}
+
+div.listDIV {
+    width: 600px;
+    margin: 0 auto;
+}
+
+div.findcontractDIV {
+    width:650px;
+    margin: 0 auto;
+}
+
+div.listcontractDIV {
+    width: 850px;
+    margin: 0 auto;
+}
+
+ 
+div.editDIV {
+    width: 450px;
+}
+ 
+nav.pageDIV {
+    text-align: center;
+}
+ 
+div.addDIV {
+    width: 400px;
+}
+
+div.addCtDIV {
+    width: 700px;
+}
+
+div.courseMask{
+	display: none;
+}
+div.memberMask{
+	display: none;
+}
+div.cancelWindowMask{
+	display: none;
+}
+div.teacherMask{
+	display: none;
+}
+div.salerMask{
+	display: none;
+}
+div.Info{
+	 width: 700px;
+    margin: 0 auto;
+}
+div.memberInfo{
+	display:none;
+}
+div.courseInfo{
+	display:none;
+}
+
+div.addCtInfo{
+	display:none;
+}
+table.addTable {
+    width: 100%;
+    padding: 5px;
+}
+ 
+table.addTable td {
+    padding: 5px;
+}
+ 
+table.editTable {
+    width: 100%;
+    padding: 5px;
+}
+ 
+table.editTable td {
+    padding: 5px;
+}

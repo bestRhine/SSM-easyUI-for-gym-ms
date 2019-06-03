@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.ssm.mapper.CourseDao">                <!--  很重要-->
+	<select id="listCourseByName"	parameterType="java.util.HashMap"  resultMap="Course">           <!-- 使用别名 -->           
+	 	
+	 	select * from course where 1=1
+	 	<choose> 
+	 	<when test="params.cname!=null">	 	
+	 	and  cname like #{params.cname}
+	 	</when>
+	 	<when test="params.cid!=null">
+	 	and cid=#{params.cid}
+	 	</when>
+	 	<when test="params.ctype!=null">
+	 	and ctype=#{params.ctype}
+	 	</when>
+	 	<otherwise>
+	 	and 1=1
+	 	</otherwise>
+	 	</choose>
+	 	
+	 	 
+	</select>
+	
+	<delete id="deleteCourse" parameterType="java.lang.Integer">
+        DELETE FROM course WHERE cid = #{cid}
+	</delete>
+	
+	    <update id="updateCourse" parameterType="Course">
+         UPDATE course SET tid = #{tid}, cinfo=#{cinfo},ctype=#{ctype},clevel=#{clevel},cpay=#{cpay}
+         WHERE 
+         cid = #{cid} and cname = #{cname}
+    </update>
+    
+	<insert id="addCourse" parameterType="Course">
+        INSERT INTO  course(tid,cname,cinfo,ctype,clevel,cpay) VALUES(#{tid}, #{cname}, #{cinfo}, #{ctype},#{clevel},#{cpay})
+    </insert>		 	
+	 	
+	  <!-- 查询一条数据 -->
+    <select id="getCourse" parameterType="java.lang.Integer"  resultMap="Course" >
+        SELECT * FROM course WHERE cid = #{cid}
+	 </select>
+	 
+	 <select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM course
+    </select>
+    
+	 <select id="list" resultMap="Course">
+        SELECT * FROM course  ORDER BY cid  desc  limit #{param1}, #{param2}
+	 </select>
+	 
+	  <resultMap id="Course" type="Course">
+        <id column="cid" property="cid"/>
+        <result column="tid" property="tid"/>
+        <result column="cname" property="cname"/>
+        <result column="cinfo" property="cinfo"/>
+        <result column="ctype" property="ctype"/>
+        <result column="clevel" property="clevel"/>
+        <result column="cpay" property="cpay"/>
+    </resultMap>
+	 
+</mapper>

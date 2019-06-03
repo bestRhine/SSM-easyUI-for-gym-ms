@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.ssm.mapper.SysEmp2Mapper">
+	<!-- resultMap映射 -->
+	<resultMap type="cn.itcast.ssm.po.SysEmp" id="SysEmpRM">
+		<!-- 主键 -->
+		<id property="empId" column="emp_id" jdbcType="VARCHAR" />
+		<!-- 一般属性 -->
+		<result property="tid" column="tid" />
+		<result property="name" column="name" />
+		<result property="gender" column="gender" />		
+		<result property="phone" column="phone" />
+		<result property="pwd" column="pwd" />
+		<result property="salt" column="salt" />
+		<result property="type" column="type" />
+		<result property="versionId" column="version_id" />
+		<result property="email" column="email" />
+
+	</resultMap>
+
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="SysEmpRM">
+		select * from
+		sys_emp
+		where emp_id=#{empId}
+	</select>
+
+	
+
+	<!-- sql片段 -->
+	<sql id="query_sys_emp_where">
+		<if test="emp_id != null"> and emp_id = #{empId}</if>
+		<if test="tid != null"> and tid like #{tid}</if>
+		<if test="name != null"> and name like #{name}</if>
+		<if test="gender != null"> and gender =#{gender}</if>
+		<if test="pwd != null"> and pwd =#{pwd}</if>
+		<if test="phone != null"> and phone = #{phone}</if>
+		<if test="version_id != null"> and version_id=#{versionId}</if>
+	</sql>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap"
+		resultMap="SysEmpRM">
+		select * from sys_emp
+		where 1=1
+		<include refid="query_sys_emp_where"></include><!-- sql片段引入 -->
+
+	</select>
+
+
+
+	<!-- 通过phone查询 -->
+	<select id="getByPhone" parameterType="string"
+		resultMap="SysEmpRM">
+		select * from sys_emp
+		where phone=#{phone}
+	</select>
+
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select COUNT(*) from sys_emp
+		where 1=1
+		<include refid="query_sys_emp_where"></include><!-- sql片段引入 -->
+	</select>
+
+	<insert id="insert" parameterType="cn.itcast.ssm.po.SysEmp">
+		insert into sys_emp
+		(emp_id,tid,name,gender,phone,pwd,salt,type,version_id,email)
+		values
+		( 
+		#{empId,jdbcType=VARCHAR},
+		#{tid,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{pwd,jdbcType=VARCHAR},
+		#{salt,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR},
+		#{versionId,jdbcType=VARCHAR},		
+		#{email,jdbcType=VARCHAR}
+		
+		)
+	</insert>
+
+	<!-- 修改语句 -->
+	<update id="update" parameterType="cn.itcast.ssm.po.SysEmp">
+		update sys_emp
+		<set>
+			<if test="tid != null">tid=#{tid,jdbcType=VARCHAR},</if>
+			<if test="name != null">name=#{name,jdbcType=VARCHAR},</if>
+			<if test="phone != null">phone=#{phone,jdbcType=VARCHAR},</if>
+			<if test="pwd != null">pwd=#{password,jdbcType=VARCHAR},</if>
+			<if test="email != null">email=#{email,jdbcType=VARCHAR},</if>
+			<if test="gender != null">version_id=#{versionId,jdbcType=VARCHAR}</if>
+		</set>
+		where emp_id=#{empId}
+	</update>
+
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from sys_emp
+		where emp_id=#{empId}
+	</delete>
+
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from sys_emp
+		where emp_id in
+		<foreach collection="array" item="emp_id" open="("
+			close=")" separator=",">
+			#{empId}
+		</foreach>
+	</delete>
+	
+	<select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sys_emp
+    </select>   
+    
+	 <select id="list" resultMap="SysEmpRM">
+        SELECT * FROM sys_emp ORDER BY emp_id  desc  limit #{param1},#{param2}
+	 </select>
+</mapper>  

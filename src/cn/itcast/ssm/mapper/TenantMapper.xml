@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.ssm.mapper.TenantMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="cn.itcast.ssm.po.Tenant" id="TenantRM">
+		<!-- 主键 -->
+		<id property="tenant_id" column="tenant_id" jdbcType="INTEGER" />
+		<!-- 一般属性 -->
+		<result property="version_id" column="version_id" />
+		<result property="tphone" column="tphone" />
+		<result property="tpwd" column="tpwd" />
+		<result property="tname" column="tname" />
+		<result property="temail" column="temail" />
+		<result property="tgender" column="tgender" />
+		<result property="salt" column="salt" />
+		
+	</resultMap>
+
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="TenantRM">
+		select * from
+		sys_tenant
+		where tenant_id=#{tenant_id}
+	</select>
+
+	
+
+	<!-- sql片段 -->
+	<sql id="query_sys_tenant_where">
+		<if test="tenant_id != null"> and tenant_id = #{tenant_id}</if>
+		<if test="version_id != null"> and version_id like #{version_id}</if>
+		<if test="tphone != null"> and tphone like #{tphone}</if>
+		<if test="tpwd != null"> and tpwd like #{tpwd}</if>
+		<if test="tgender != null"> and tgender =#{tgender}</if>
+		<if test="salt != null"> and salt like #{salt}</if>
+	</sql>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap"
+		resultMap="TenantRM">
+		select * from sys_tenant
+		where 1=1
+		<include refid="query_sys_tenant_where"></include><!-- sql片段引入 -->
+	</select>
+
+
+
+	
+
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select COUNT(*) from sys_tenant
+		where 1=1
+		<include refid="query_sys_tenant_where"></include><!-- sql片段引入 -->
+	</select>
+
+	<insert id="insert" parameterType="cn.itcast.ssm.po.Tenant">
+		insert into sys_tenant
+		(TENANT_ID,VERSION_ID,TPHONE,TPWD,TNAME,TEMAIL,TGENDER,SALT
+		)
+		values
+		( 
+		#{tenant_id,jdbcType=VARCHAR},
+		#{version_id,jdbcType=VARCHAR},
+		#{tphone,jdbcType=VARCHAR},
+		#{tpwd,jdbcType=VARCHAR},
+		#{tname,jdbcType=INTEGER},
+		#{temail,jdbcType=INTEGER},
+		#{tgender,jdbcType=VARCHAR},
+		#{salt,jdbcType=VARCHAR}
+			
+		)
+	</insert>
+
+	<!-- 修改语句 -->
+	<update id="update" parameterType="cn.itcast.ssm.po.Tenant">
+		update sys_tenant
+		<set>
+			<if test="version_id != null">version_id=#{version_id,jdbcType=VARCHAR},</if>
+			<if test="tphone != null">tphone=#{tphone,jdbcType=VARCHAR},</if>
+			<if test="tpwd != null">tpwd=#{tpwd,jdbcType=VARCHAR},</if>
+			<if test="tname != null">tname=#{tname,jdbcType=INTEGER},</if>
+			<if test="temail != null">temail=#{temail,jdbcType=INTEGER},</if>
+			<if test="tgender != null">tgender=#{tgender,jdbcType=VARCHAR},</if>
+			<if test="salt != null">salt=#{salt,jdbcType=VARCHAR},</if>
+			
+		</set>
+		where tenant_id=#{tenant_id}
+	</update>
+
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from sys_tenant
+		where tenant_id=#{tenant_id}
+	</delete>
+	
+	<select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sys_tenant
+    </select>   
+    
+	 <select id="list" resultMap="TenantRM">
+        SELECT * FROM sys_tenant ORDER BY tenant_id  desc  limit #{param1},#{param2}
+	 </select>
+
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from sys_tenant
+		where tenant_id in
+		<foreach collection="array" item="tenant_id" open="("
+			close=")" separator=",">
+			#{tenant_id}
+		</foreach>
+	</delete>
+</mapper>  

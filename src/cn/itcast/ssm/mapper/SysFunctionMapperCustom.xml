@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.ssm.mapper.SysFunctionMapperCustom">
+  <resultMap id="BaseResultMap" type="cn.itcast.ssm.po.SysFunction">
+    <id column="function_id" jdbcType="VARCHAR" property="functionId" />
+    <result column="fname" jdbcType="VARCHAR" property="fname" />
+    <result column="fkey" jdbcType="VARCHAR" property="fkey" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="percode" jdbcType="VARCHAR" property="percode" />
+    <result column="isatom" jdbcType="VARCHAR" property="isatom" />
+    <result column="parent" jdbcType="VARCHAR" property="parent" />
+    <result column="avaliable" jdbcType="VARCHAR" property="avaliable" />
+  </resultMap>
+  
+  
+  <select id="findAdminFunctionListByUserId" parameterType="string" resultType="cn.itcast.ssm.po.SysFunction">
+  	SELECT f.* 
+  	FROM sys_emp e INNER JOIN sys_ver_fun vf 
+	ON e.version_id=vf.version_id
+	INNER JOIN sys_function f
+	ON vf.function_id=f.parent
+	AND e.phone=#{id}
+  
+  </select>
+  
+  <select id="findEmpFunctionListByUserId" parameterType="string" resultType="cn.itcast.ssm.po.SysFunction">
+  
+  
+  </select>
+  
+</mapper>

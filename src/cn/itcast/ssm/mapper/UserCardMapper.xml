@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.ssm.mapper.UserCardMapper">  
+
+	<resultMap  id="UserCardRM" type="cn.itcast.ssm.po.UserCard">
+		<!-- 主键 -->
+		<id property="cardNumber" column="cardNumber" jdbcType="VARCHAR" />
+		<!-- 一般属性 -->
+		
+		<result property="userNumber" column="userNumber" />
+		<result property="tenantID" column="tenantID" />
+		<result property="vipCardType" column="vipCardType" />
+		<result property="cardType" column="cardType" />
+		<result property="userNumber" column="userNumber" />
+		<result property="timeCardSumTime" column="timeCardSumTime" />
+		<result property="timesCardSumTimes" column="timesCardSumTimes" />
+		<result property="cardRenewals" column="cardRenewals" />
+		<result property="cardTypeSerial" column="cardTypeSerial" />
+		<result property="activationTime" column="activationTime" />
+		<result property="remainingTime" column="remainingTime" />
+		<result property="remainingTimes" column="remainingTimes" />
+		<result property="contractNumber" column="contractNumber" />
+		<result property="cardTypeName" column="cardTypeName" />	
+		<result property="username" column="username" />	
+		<result property="realPrice" column="realPrice" />	
+		<result property="price" column="price" />	
+	</resultMap>
+	
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="UserCardRM">
+		select * from
+		user_card
+		where cardNumber=#{cardNumber}
+	</select>
+
+	<!-- 查询一个 -->
+	<select id="getByUserNumber" parameterType="string"
+		resultMap="UserCardRM">
+		select * from user_card
+		where userNumber=#{userNumber}
+	</select>
+
+	<!-- sql片段 -->
+	<sql id="query_user_card_where">
+		<if test="userNumber != null"> and userNumber = #{userNumber}</if>
+		<if test="tenantID != null"> and tenantID like #{tenantID}</if>
+		<if test="cardNumber != null"> and cardNumber like #{cardNumber}</if>
+		<if test="cardType != null"> and cardType like #{cardType}</if>
+		<if test="cardStatus != null"> and cardStatus =#{cardStatus}</if>
+		<if test="timeCardSumTime != null"> and timeCardSumTime like #{timeCardSumTime}</if>
+		<if test="timesCardSumTimes != null"> and timesCardSumTimes like #{timesCardSumTimes}</if>
+		<if test="username != null"> and username like #{username}</if>
+		<if test="realPrice != null"> and realPrice like #{realPrice}</if>
+		
+	</sql>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap"
+		resultMap="UserCardRM">
+		select * from user_card
+		where 1=1
+		<include refid="query_user_card_where"></include><!-- sql片段引入 -->
+
+	</select>
+
+
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select COUNT(*) from user_card
+		where 1=1
+		<include refid="query_user_card_where"></include><!-- sql片段引入 -->
+	</select>
+
+	<insert id="insert" parameterType="cn.itcast.ssm.po.UserCard">
+		insert into user_card
+		(USERNUMBER,TENANTID,CARDTYPE,CARDSTATUS,TIMECARDSUMTIME,TIMESCARDSUMTIMES
+		,CARDRENEWALS,CARDTYPESERIAL,ACTIVATIONTIME,REMAININGTIME,REMAININGTIMES,CONTRACTNUMBER,CARDTYPENAME,USERNAME,REALPRICE,PRICE)
+		values
+		( 
+		#{userNumber,jdbcType=VARCHAR},
+		#{tenantID,jdbcType=VARCHAR},
+		#{cardType,jdbcType=VARCHAR},
+		#{cardStatus,jdbcType=VARCHAR},
+		#{timeCardSumTime,jdbcType=INTEGER},
+		#{timesCardSumTimes,jdbcType=INTEGER},
+		#{cardRenewals,jdbcType=INTEGER},
+		#{cardTypeSerial,jdbcType=INTEGER},
+		#{activationTime,jdbcType=VARCHAR},
+		#{remainingTime,jdbcType=INTEGER},
+		#{remainingTimes,jdbcType=INTEGER},
+		#{contractNumber,jdbcType=VARCHAR},
+		#{cardTypeName,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{realPrice,jdbcType=INTEGER},
+		#{price,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<!-- 修改语句 -->
+	<update id="update" parameterType="cn.itcast.ssm.po.UserCard">
+		update user_card
+		<set>
+			<if test="userNumber != null">userNumber=#{userNumber,jdbcType=VARCHAR},</if>
+			<if test="tenantID != null">tenantID=#{tenantID,jdbcType=VARCHAR},</if>
+			<if test="cardType != null">cardType=#{cardType,jdbcType=VARCHAR},</if>
+			<if test="cardStatus != null">cardStatus=#{cardStatus,jdbcType=VARCHAR},</if>
+			<if test="timeCardSumTime != null">timeCardSumTime=#{timeCardSumTime,jdbcType=INTEGER},</if>
+			<if test="timesCardSumTimes != null">timesCardSumTimes=#{timesCardSumTimes,jdbcType=INTEGER},</if>
+			<if test="cardRenewals != null">cardRenewals=#{cardRenewals,jdbcType=INTEGER},</if>
+			<if test="cardTypeSerial != null">cardTypeSerial=#{cardTypeSerial,jdbcType=INTEGER},</if>
+			<if test="activationTime != null">activationTime=#{activationTime,jdbcType=VARCHAR},</if>
+			<if test="remainingTime != null">remainingTime=#{remainingTime,jdbcType=INTEGER},</if>
+			<if test="remainingTimes != null">remainingTimes=#{remainingTimes,jdbcType=INTEGER},</if>
+			<if test="contractNumber != null">contractNumber=#{contractNumber,jdbcType=VARCHAR},</if>
+			<if test="cardTypeName != null">cardTypeName=#{cardTypeName,jdbcType=VARCHAR},</if>
+			<if test="username != null">username=#{username,jdbcType=VARCHAR},</if>
+			<if test="realPrice != null">realPrice=#{realPrice,jdbcType=INTEGER},</if>
+			<if test="realPrice != null">price=#{price,jdbcType=INTEGER}</if>
+		</set>
+		where cardNumber=#{cardNumber}
+	</update>
+
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from user_card
+		where cardNumber=#{cardNumber}
+	</delete>
+
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from user_card
+		where cardNumber in
+		<foreach collection="array" item="userNumber" open="("
+			close=")" separator=",">
+			#{cardNumber}
+		</foreach>
+	</delete>
+	
+	<select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user_card
+    </select>   
+  
+  	<select id="list" resultMap="UserCardRM">
+        SELECT * FROM user_card ORDER BY cardNumber  desc  limit #{param1},#{param2}
+	 </select>
+	
+	
+	<select id="findCardsByUserNumber"	parameterType="java.lang.String"  resultMap="UserCardRM">  
+		select * from user_card
+		where userNumber=#{UserNumber}
+	</select>  
+	
+
+	 
+</mapper>

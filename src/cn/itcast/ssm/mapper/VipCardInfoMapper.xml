@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.ssm.mapper.VipCardInfoMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="cn.itcast.ssm.po.VipCardInfo" id="VipCardInfoRM">
+		<!-- 主键 -->
+		<id property="cardTypeSerial" column="cardTypeSerial" jdbcType="INTEGER" />
+		<!-- 一般属性 -->
+		<result property="tenantID" column="tenantID" />
+		<result property="vipCardType" column="vipCardType" />
+		<result property="chargeMethod" column="chargeMethod" />
+		<result property="effectiveMonth" column="effectiveMonth" />
+		<result property="effectiveTimes" column="effectiveTimes" />
+		<result property="beginDate" column="beginDate" />
+		<result property="endDate" column="endDate" />
+		<result property="dropOutMoney" column="dropOutMoney" />
+		<result property="commissionRatio" column="commissionRatio" />
+		<result property="giveTime" column="giveTime" />
+		<result property="giveTimes" column="giveTimes" />
+		<result property="price" column="price" />
+		<result property="description" column="description" />
+		<result property="discount" column="discount" />
+		<result property="gift" column="gift" />
+		<result property="isEnabled" column="isEnabled" />
+		<result property="beginTime" column="beginTime" />
+		<result property="endTime" column="endTime" />
+
+	</resultMap>
+
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="VipCardInfoRM">
+		select * from
+		vip_card_info
+		where cardTypeSerial=#{cardTypeSerial}
+	</select>
+
+	
+
+	<!-- sql片段 -->
+	<sql id="query_vip_card_info_where">
+		<if test="cardTypeSerial != null"> and cardTypeSerial = #{cardTypeSerial}</if>
+		<if test="tenantID != null"> and tenantID like #{tenantID}</if>
+		<if test="vipCardType != null"> and vipCardType like #{vipCardType}</if>
+		<if test="chargeMethod != null"> and chargeMethod like #{chargeMethod}</if>
+		<if test="beginDate != null"> and beginDate =#{beginDate}</if>
+		<if test="endDate != null"> and endDate like #{endDate}</if>
+		<if test="price != null"> and price like #{price}</if>
+	</sql>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap"
+		resultMap="VipCardInfoRM">
+		select * from vip_card_info
+		where 1=1
+		<include refid="query_vip_card_info_where"></include><!-- sql片段引入 -->
+	</select>
+
+
+
+	
+
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select COUNT(*) from vip_card_info
+		where 1=1
+		<include refid="query_vip_card_info_where"></include><!-- sql片段引入 -->
+	</select>
+
+	<insert id="insert" parameterType="cn.itcast.ssm.po.VipCardInfo">
+		insert into vip_card_info
+		(TENANTID,VIPCARDTYPE,CHARGEMETHOD,EFFECTIVEMONTH,EFFECTIVETIMES,BEGINDATE
+		,ENDDATE,DROPOUTMONEY,COMMISSIONRATIO,GIVETIME,GIVETIMES,PRICE,DESCRIPTION,DISCOUNT
+		,GIFT,ISENABLED,BEGINTIME,ENDTIME
+		)
+		values
+		( 
+
+		#{tenantID,jdbcType=VARCHAR},
+		#{vipCardType,jdbcType=VARCHAR},
+		#{chargeMethod,jdbcType=VARCHAR},
+		#{effectiveMonth,jdbcType=INTEGER},
+		#{effectiveTimes,jdbcType=INTEGER},
+		#{beginDate,jdbcType=VARCHAR},
+		#{endDate,jdbcType=VARCHAR},
+		#{dropOutMoney,jdbcType=INTEGER},
+		#{commissionRatio,jdbcType=DECIMAL},
+		#{giveTime,jdbcType=INTEGER},
+		#{giveTimes,jdbcType=INTEGER},
+		#{price,jdbcType=INTEGER},
+		#{description,jdbcType=VARCHAR},
+		#{discount,jdbcType=DECIMAL},
+		#{gift,jdbcType=VARCHAR},
+		#{isEnabled,jdbcType=VARCHAR},
+		#{beginTime,jdbcType=VARCHAR},
+		#{endTime,jdbcType=VARCHAR}		
+		)
+	</insert>
+
+	<!-- 修改语句 -->
+	<update id="update" parameterType="cn.itcast.ssm.po.VipCardInfo">
+		update vip_card_info
+		<set>
+			<if test="tenantID != null">tenantID=#{tenantID,jdbcType=VARCHAR},</if>
+			<if test="vipCardType != null">vipCardType=#{vipCardType,jdbcType=VARCHAR},</if>
+			<if test="chargeMethod != null">chargeMethod=#{chargeMethod,jdbcType=VARCHAR},</if>
+			<if test="effectiveMonth != null">effectiveMonth=#{effectiveMonth,jdbcType=INTEGER},</if>
+			<if test="effectiveTimes != null">effectiveTimes=#{effectiveTimes,jdbcType=INTEGER},</if>
+			<if test="beginDate != null">beginDate=#{beginDate,jdbcType=VARCHAR},</if>
+			<if test="endDate != null">endDate=#{endDate,jdbcType=VARCHAR},</if>
+			<if test="dropOutMoney != null">dropOutMoney=#{dropOutMoney,jdbcType=INTEGER},</if>
+			<if test="commissionRatio != null">commissionRatio=#{commissionRatio,jdbcType=DECIMAL},</if>
+			<if test="giveTime != null">giveTime=#{giveTime,jdbcType=INTEGER},</if>
+			<if test="giveTimes != null">giveTimes=#{giveTimes,jdbcType=INTEGER},</if>
+			<if test="price != null">price=#{price,jdbcType=INTEGER},</if>
+			<if test="description != null">description=#{description,jdbcType=VARCHAR},</if>
+			<if test="discount != null">discount=#{discount,jdbcType=DECIMAL},</if>
+			<if test="gift != null">gift=#{gift,jdbcType=VARCHAR},</if>
+			<if test="isEnabled != null">isEnabled=#{isEnabled,jdbcType=VARCHAR},</if>
+			<if test="beginTime != null">beginTime=#{beginTime,jdbcType=VARCHAR},</if>
+			<if test="endTime != null">endTime=#{endTime,jdbcType=VARCHAR}</if>
+		</set>
+		where cardTypeSerial=#{cardTypeSerial}
+	</update>
+
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from vip_card_info
+		where cardTypeSerial=#{cardTypeSerial}
+	</delete>
+	
+	<select id="getTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM vip_card_info
+    </select>   
+    
+	 <select id="list" resultMap="VipCardInfoRM">
+        SELECT * FROM vip_card_info ORDER BY cardTypeSerial  desc  limit #{param1},#{param2}
+	 </select>
+
+	<!-- 删除多条(一维字符串数组的形式) -->
+	<delete id="delete" parameterType="string">
+		delete from vip_card_info
+		where cardTypeSerial in
+		<foreach collection="array" item="cardTypeSerial" open="("
+			close=")" separator=",">
+			#{cardTypeSerial}
+		</foreach>
+	</delete>
+</mapper>  
