@@ -14,27 +14,20 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-
+//
 import cn.itcast.ssm.po.ActiveUser;
-import cn.itcast.ssm.po.SysPermission;
-import cn.itcast.ssm.po.SysUser;
+import cn.itcast.ssm.po.SysEmp;
+import cn.itcast.ssm.po.SysFunction;
+//import cn.itcast.ssm.po.SysFunction;
 import cn.itcast.ssm.service.SysService;
 
+
 /**
- * 
- * <p>Title: CustomRealm
- * </p>
- * <p>
- * Description:自定义realm
- * </p>
- * <p>
- * Company: www.itcast.com
- * </p>
- * 
- * @author 传智.燕青
- * @date 2015-3-23下午4:54:47
- * @version 1.0
+ *	 自定义realm
+ * @author YAO
+ *
  */
+
 public class CustomRealm extends AuthorizingRealm {
 
 	@Autowired
@@ -57,9 +50,9 @@ public class CustomRealm extends AuthorizingRealm {
 		String userCode = (String) token.getPrincipal();
 
 		// 第二步：根据用户输入的userCode从数据库查询
-		SysUser sysUser = null;
+		SysEmp sysEmp = null;
 		try {
-			sysUser =  sysService.findSysUserByUserCode(userCode);
+			sysEmp =  sysService.findSysEmpByUserCode(userCode);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -68,32 +61,34 @@ public class CustomRealm extends AuthorizingRealm {
 	
 
 		// 如果查询不到返回null
-		if(sysUser == null)
+		if(sysEmp == null)
 			return null;
 		
 		
 		// 从数据库查询到密码
 		//String password = "111111";
-		String password = sysUser.getPassword();
+		String password = sysEmp.getPwd();
 		//盐
-		String salt = sysUser.getSalt();
+		String salt = sysEmp.getSalt();
 		
 		
 		// 如果查询到返回认证信息AuthenticationInfo,activeUser就是身份信息
 		ActiveUser activeUser = new ActiveUser();
-		activeUser.setUserid(sysUser.getId());
-		activeUser.setUsercode(sysUser.getUsercode());
-		activeUser.setUsername(sysUser.getUsername());
-		
+		activeUser.setUserid(sysEmp.getEmpId());
+		activeUser.setUsercode(sysEmp.getPhone());
+		activeUser.setUsername(sysEmp.getName());
+		activeUser.setTid(sysEmp.getTid());
+		activeUser.setType(sysEmp.getType());
+		activeUser.setVid(sysEmp.getVersionId());
 		//根据用户id取出菜单
-		List<SysPermission> menus = null;
-		try {
-			menus = sysService.findMenuListByUserId(sysUser.getId());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		activeUser.setMenus(menus);
+//		List<SysFunction> menus = null;
+//		try {
+//			menus = sysService.findMenuListByUserId(sysEmp.getId());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		activeUser.setMenus(menus);
 		
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
 				activeUser, password,ByteSource.Util.bytes(salt), this.getName());
@@ -113,9 +108,9 @@ public class CustomRealm extends AuthorizingRealm {
 		//根据身份信息获取权限信息
 		//连接数据库...
 		//模拟从数据库获取到数据
-		List<SysPermission> permissionList = null;
+		List<SysFunction> functionList = null;
 		try {
-			permissionList = sysService.findPermissionListByUserId(activeUser.getUserid());
+			functionList = sysService.findFunctionListByUserId(activeUser);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,11 +118,11 @@ public class CustomRealm extends AuthorizingRealm {
 		
 		
 		List<String> permissions = new ArrayList<String>();
-		if(permissionList!=null)
+		if(functionList!=null)
 		{
-			for(SysPermission sysPermission:permissionList)
+			for(SysFunction sysFunction:functionList)
 			{
-				permissions.add(sysPermission.getPercode());
+				permissions.add(sysFunction.getPercode());
 			}
 		}
 		
@@ -138,7 +133,7 @@ public class CustomRealm extends AuthorizingRealm {
 
 		return simpleAuthorizationInfo;
 	}
-
+//
 	//清楚缓存
 	public void clearCached()
 	{

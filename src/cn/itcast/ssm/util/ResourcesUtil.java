@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * 资源文件读取工具类
+ * 	资源文件读取工具类
  * 
  */
 public class ResourcesUtil implements Serializable {

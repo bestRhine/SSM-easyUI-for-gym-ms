@@ -7,17 +7,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.itcast.ssm.po.ItemsCustom;
+//import cn.itcast.ssm.po.ItemsCustom;
 
 /**
- * 
- * <p>Title: JsonTest</p>
- * <p>Description: json测试</p>
- * <p>Company: www.itcast.com</p> 
- * @author	传智.燕青
- * @date	2015-3-22上午11:24:12
- * @version 1.0
+ * Json测试
+ * @author YAO
+ *
  */
+/*
 @Controller
 public class JsonTest {
 
@@ -38,3 +35,4 @@ public class JsonTest {
 			return itemsCustom;
 		}
 }
+*/

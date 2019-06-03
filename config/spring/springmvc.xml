@@ -19,7 +19,9 @@
 	
 	<!-- 通过annotation-driven可以替代下边的处理器映射器和适配器 -->
 	<mvc:annotation-driven conversion-service="conversionService" validator="validator"> </mvc:annotation-driven>
-
+	
+	<mvc:view-controller path="/" view-name="index"/>
+	
 	<!-- 配置视图解析器 要求将jstl的包加到classpath -->
 	<!-- ViewResolver -->
 	<bean
@@ -77,6 +79,7 @@
 		<!-- 对资源文件内容缓存时间，单位秒 -->
 		<property name="cacheSeconds" value="120" />
 	</bean>
+	<aop:config proxy-target-class="true"></aop:config>
 
 
 </beans>

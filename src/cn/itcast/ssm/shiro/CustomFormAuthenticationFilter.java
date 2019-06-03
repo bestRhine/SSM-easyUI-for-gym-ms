@@ -6,7 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-
+/**
+ * 	自定义表单认证过滤器
+ * @author YAO
+ *
+ */
 public class CustomFormAuthenticationFilter extends FormAuthenticationFilter{
 
 	@Override

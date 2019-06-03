@@ -18,7 +18,11 @@
 			<property name="securityManager" ref="securityManager"></property>
 			<!-- loginUrl认证提交地址，即如果没有认证的用户，将会请求这里配置的地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 -->
 			<property name="loginUrl" value="/login.action"></property>
-			<!-- 通过unauthorizedUrl指定当认证不通过（或没有权限）后要跳转的拒绝页面的地址 -->
+			<!-- 通过unauthorizedUrl指定当认证不通过（或没有权限）后要跳转的拒绝页面的地址 
+					这个配置在使用注解方式授权的情况下不管用，需要额外的配置。
+					今后授权统一使用注解方式，然后设置统一的自定义异常类和异常处理类，
+					对系统各种异常进行处理（包括未授权异常）进行处理
+			-->
 			<property name="unauthorizedUrl" value="/refuse.jsp"></property>
 			<!-- 自定义filter配置 -->
 			<property name="filters" >
@@ -34,12 +38,15 @@
 					<!-- 这种方法有个弊端，就是需要把所有的url都进行配置。
 					今后使用注解的方式，对类的方法进行注解授权，建议对controler类的方法进行注解-->
 					
-					<!-- 对静态资源设置可以匿名访问 -->
+					<!-- 对静态资源设置可以匿名访问 
+						根目录也要配置anon，这样才能默认访问index.jsp.不然都会跳转到loginUrl-->
+					/ = anon
+					/index.jsp = anon
 					/images/** = anon
 					/js/** = anon
 					/styles/** = anon
 					/validatecode.jsp = anon
-					/index.jsp = anon
+					
 					/register.jsp = anon				
 					<!-- 请求logout。action地址，shiro去清除session -->
 					/logout.action = logout
@@ -47,6 +54,7 @@
 					<!-- 商品查询需要商品查询的权限 -->
 					<!-- /items/queryItems.action = perms[item:query] -->
 					<!-- /items/editItems.action = perms[item:edit] -->
+					/tenantManager/getTenants.action = perms[tenantmgt:view]
 					<!-- 通过记住我认证通过即可访问的路径 -->
 					<!-- /index.jsp = user -->
 					/first.action = user
@@ -61,7 +69,9 @@
 			</property>
 			
 		</bean>
-		
+		<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+			<property name="securityManager" ref="securityManager"/>
+		</bean>
 		
 		<!-- 自定义form认证过滤器,要注入到上述  shiro的web过滤器中 -->
 		<bean id="formAuthenticationFilter" class="cn.itcast.ssm.shiro.CustomFormAuthenticationFilter">

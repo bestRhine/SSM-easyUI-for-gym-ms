@@ -25,27 +25,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.itcast.ssm.controller.validation.ValidGroup1;
 import cn.itcast.ssm.exception.CustomException;
-import cn.itcast.ssm.po.ItemsCustom;
-import cn.itcast.ssm.po.ItemsQueryVo;
+//import cn.itcast.ssm.po.ItemsCustom;
+//import cn.itcast.ssm.po.ItemsQueryVo;
 import cn.itcast.ssm.service.ItemsService;
 
 
 /**
- * 
- * <p>
- * Title: ItemsController
- * </p>
- * <p>
- * Description:商品管理
- * </p>
- * <p>
- * Company: www.itcast.com
- * </p>
- * 
- * @author 传智.燕青
- * @date 2015-3-20下午3:04:57
- * @version 1.0
+ * 	商品管理
+ * @author YAO
+ *
  */
+/*
 @Controller
 //定义url的根路径，访问时根路径+方法的url
 @RequestMapping("/items")
@@ -179,6 +169,7 @@ public class ItemsController {
 //			ItemsQueryVo itemsQueryVo)throws Exception{
 	@RequiresPermissions("item:update")//执行此方法需要“item:update”权限
 	public String editItemSubmit(Model model,Integer id,
+			//每个需要校验的pojo前面加@Validated 后面加BindingResult
 				@Validated(value={ValidGroup1.class}) @ModelAttribute(value="itemsCustom") ItemsCustom itemsCustom,
 				BindingResult bindingResult,
 			//上传图片
@@ -254,3 +245,4 @@ public class ItemsController {
 	
 
 }
+*/

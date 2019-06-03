@@ -6,18 +6,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 
- * <p>Title: CustomExceptionResolver</p>
- * <p>Description: 自定义异常处理器</p>
- * <p>Company: www.itcast.com</p> 
- * @author	传智.燕青
- * @date	2015-3-22下午2:57:42
- * @version 1.0
+ * Description: 自定义异常处理器
+ * @author	yyc
  */
 public class CustomExceptionResolver implements HandlerExceptionResolver  {
 
@@ -38,7 +35,9 @@ public class CustomExceptionResolver implements HandlerExceptionResolver  {
 		//如果ex是系统 自定义的异常，直接取出异常信息
 		if(ex instanceof CustomException){
 			customException = (CustomException)ex;
-		}else{
+		}else if(ex instanceof UnauthorizedException){
+			customException = new CustomException("没有权限");
+		} else {
 			//针对非CustomException异常，对这类重新构造成一个CustomException，异常信息为“未知错误”
 			customException = new CustomException("未知错误");
 		}

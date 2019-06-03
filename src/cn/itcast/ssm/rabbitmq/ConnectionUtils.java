@@ -6,6 +6,11 @@ import java.util.concurrent.TimeoutException;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+/**
+ * 	连接获取
+ * @author YAO
+ *
+ */
 public class ConnectionUtils {
 
 	

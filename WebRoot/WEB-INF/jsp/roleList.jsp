@@ -18,14 +18,15 @@
 <body> 
 
 
-<table id="dg" title="角色" class="easyui-datagrid" style="width:550px;height:250px"
+<table id="dg" title="角色" class="easyui-datagrid" style="width:550px;height:500px"
 		url="${pageContext.request.contextPath }/roleManager/queryRoles.action"
 		toolbar="#toolbar" pagination="true"
 		rownumbers="true" fitColumns="true" singleSelect="true">
 	<thead>
 		<tr>
-			<th field="id" width="50">角色id</th>
-			<th field="name" width="50">角色名</th>
+			<th field="roleId" width="50">角色ID</th>
+			<th field="tid" width="50">租户ID</th>
+			<th field="roleName" width="50">角色名</th>
 			<th field="available" width="50">是否可用</th>
 		</tr>
 	</thead>
@@ -42,19 +43,18 @@
 		<form id="fm" method="post" novalidate>
 			<div class="fitem">
 				<label>角色id:</label>
-				<input name="id" class="easyui-textbox" required="true">
+				<input name="roleId" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
 				<label>设置权限</label>
 				<ul id="tt" class="easyui-tree"
 					url="${pageContext.request.contextPath }/roleManager/getPermissions.action"
-					checkbox="true" text="${$node.name}">
-					
+					checkbox="true" text="${$node.name}">					
 				</ul>
 			</div>
 			<div class="fitem">
 				<label>角色名:</label>
-				<input name="name" class="easyui-textbox" required="true">
+				<input name="roleName" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
 				<label>是否可用</label>
@@ -78,7 +78,7 @@
 			if (row){
 				$('#dlg').dialog('open').dialog('setTitle','修改角色');
 				$('#fm').form('load',row);
-				url = 'update_user.php?id='+row.id;
+				url = '${pageContext.request.contextPath }/roleManager/editRole.action?id='+row.roleId;
 			}
 		}
 		function queryRolePermission(){
@@ -111,7 +111,7 @@
 			if (row){
 				$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
 					if (r){
-						$.post('destroy_user.php',{id:row.id},function(result){
+						$.post('${pageContext.request.contextPath }/roleManager/delete.action',{id:row.roleId},function(result){
 							if (result.success){
 								$('#dg').datagrid('reload');	// reload the user data
 							} else {

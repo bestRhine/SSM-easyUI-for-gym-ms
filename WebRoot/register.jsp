@@ -31,30 +31,43 @@
 </STYLE>
 <%@ include file="/WEB-INF/jsp/common_js.jsp"%>
 
+<script type="text/javascript">
 
+	//登录提示方法
+	function loginsubmit() {
+		$("#loginform").submit();
+
+	}
+	
+</SCRIPT>
 </HEAD>
 <BODY style="background: #f6fdff url(${baseurl}images/login/bg1.jpg) repeat-x;">
 	<FORM id="loginform" name="loginform" action="${baseurl}register.action"
 		method="post">
 		<DIV class="logincon">
-
+			
 
 			<DIV class="tab_con">
 
 				<TABLE class="tab" border="0" cellSpacing="6" cellPadding="8">
 					<TBODY>
 						<TR>
-							<TD>用    户   名：</TD>
-							<TD colSpan="2"><input type="text" id="usercode"
+							<TD>手机：</TD>
+							<TD colSpan="2"><input type="text" id="phone"
+								name="phone" style="WIDTH: 130px" /></TD>
+						</TR>
+						<TR>
+							<TD>用户名：</TD>
+							<TD colSpan="2"><input type="text" id="username"
 								name="username" style="WIDTH: 130px" /></TD>
 						</TR>
 						<TR>
-							<TD>邮      箱：</TD>
+							<TD>邮箱：</TD>
 							<TD><input type="text" id="email" name="email" style="WIDTH: 130px" />
 							</TD>
 						</TR>
 						<TR>
-							<TD>密 码：</TD>
+							<TD>密码：</TD>
 							<TD><input type="password" id="pwd" name="password" style="WIDTH: 130px" />
 							</TD>
 						</TR>
@@ -63,6 +76,16 @@
 							<TD><input type="password" id="confirmpwd" name="confirmpassword" style="WIDTH: 130px" />
 							</TD>
 						</TR>
+						
+						<TR>
+							<TD>购买版本：</TD>
+							<TD>
+								<input type="checkbox" id="mini" name="version" value="mini" />迷你版
+								<input type="checkbox" id="standard" name="version" value="standard" />标准版
+								<input type="checkbox" id="club" name="version" value="club" />标准版
+							</TD>
+						</TR>
+						
  						<TR>
 							<TD>验证码：</TD>
 							<TD><input id="randomcode" name="randomcode" size="8" /> <img
@@ -83,5 +106,8 @@
 			</DIV>
 		</DIV>
 	</FORM>
+	
+	
 </BODY>
+
 </HTML>

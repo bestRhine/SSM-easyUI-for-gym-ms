@@ -41,7 +41,7 @@
 	
 </SCRIPT>
 </HEAD>
-<BODY style="background: #f6fdff url(${baseurl}images/login/bg1.jpg) repeat-x;">
+<BODY style="background: #f6fdff url(${baseurl}images/login/bg3.png) repeat-x;">
 	<FORM id="loginform" name="loginform" action="${baseurl}login.action"
 		method="post">
 		<DIV class="logincon">
@@ -51,7 +51,7 @@
 			</DIV>
 
 			<DIV class="cen_con">
-				<IMG alt="" src="${baseurl}images/login/bg2.png">
+				<IMG alt="" src="${baseurl}images/login/bg5.png">
 			</DIV>
 
 			<DIV class="tab_con">
@@ -89,7 +89,6 @@
 						</TR>
 					</TBODY>
 				</TABLE>
-
 			</DIV>
 		</DIV>
 	</FORM>

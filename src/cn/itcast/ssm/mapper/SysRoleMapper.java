@@ -6,11 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysRoleMapper {
-    int countByExample(SysRoleExample example);
+    long countByExample(SysRoleExample example);
 
     int deleteByExample(SysRoleExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String roleId);
 
     int insert(SysRole record);
 
@@ -18,7 +18,7 @@ public interface SysRoleMapper {
 
     List<SysRole> selectByExample(SysRoleExample example);
 
-    SysRole selectByPrimaryKey(String id);
+    SysRole selectByPrimaryKey(String roleId);
 
     int updateByExampleSelective(@Param("record") SysRole record, @Param("example") SysRoleExample example);
 

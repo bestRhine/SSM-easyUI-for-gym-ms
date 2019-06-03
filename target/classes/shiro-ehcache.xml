@@ -3,7 +3,7 @@
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
   <!-- 磁盘缓存位置 -->
-  <diskStore path="E:\MyCache\ehcache"/>
+  <diskStore path="D:\MyCache\ehcache"/>
 
   <!-- 默认缓存 -->
   <defaultCache

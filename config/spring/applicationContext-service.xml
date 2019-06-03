@@ -17,4 +17,31 @@
 	
 <!-- 认证和授权的service -->
 <bean id="sysService" class="cn.itcast.ssm.service.impl.SysServiceImpl"></bean>
+
+<!-- 用户管理的service -->
+<bean id="userInfoService" class="cn.itcast.ssm.service.impl.UserInfoServiceImpl"></bean>
+
+<!-- 会员卡的service -->
+<bean id="userCardService" class="cn.itcast.ssm.service.impl.UserCardServiceImpl"></bean>
+
+<!-- 会员卡种的service -->
+<bean id="vipCardInfoService" class="cn.itcast.ssm.service.impl.VipCardInfoServiceImpl"></bean>
+
+<!-- 合同管理的service -->
+<bean id="contractService" class="cn.itcast.ssm.service.impl.ContractServiceImpl"></bean>
+
+<!-- 课程管理的service -->
+<bean id="courseService" class="cn.itcast.ssm.service.impl.CourseServiceImpl"></bean>
+
+<!-- 员工角色管理管理的service -->
+<bean id="empRoleService" class="cn.itcast.ssm.service.impl.EmpRoleServiceImpl"></bean>
+
+<!-- 租户管理的service -->
+<bean id="tenantervice" class="cn.itcast.ssm.service.impl.TenantServiceImpl"></bean>
+
+<!-- 员工管理的service -->
+<bean id="sysEmpService" class="cn.itcast.ssm.service.impl.SysEmpServiceImpl"></bean>
+
+
 </beans>
+
